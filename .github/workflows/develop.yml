@@ -12,15 +12,10 @@ permissions:
 # pasos que se deben ejecutar
 jobs:
   terraform:
-    runs-on: ubuntu-latest
-
     permissions:
       id-token: write
       contents: read
 
-    defaults:
-      run:
-        shell: bash
     # usamos el archivo creado en el paso anterior
     uses: ./.github/workflows/terraform.yml
     with:
