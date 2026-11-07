@@ -19,7 +19,7 @@ jobs:
       environment: dev
 
       # remplazar por el ARN del rol que se creo en la actividad 1
-      aws-assume-role-arn: "arn:aws:iam::573256070386:role/ROLIACGrupo_2"
+      aws-assume-role-arn: "arn:aws:iam::573256070386:role/Grupo2IAC"
 
       aws-region: "us-east-1"
 
