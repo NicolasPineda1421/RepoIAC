@@ -17,4 +17,9 @@ resource "aws_s3_bucket" "my_bucket" {
     
     acl = "private"
     force_destroy = true 
+    
+    tags = {
+        Environment = "dev"
+        Grupo       = "grupo2"
+    }
 }
