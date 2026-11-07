@@ -1,1 +1,1 @@
-bucket_name="dev-bucketiac-grupo2-573256070386"
+bucket_name="dev-bucketiac-grupo2actividad7"
