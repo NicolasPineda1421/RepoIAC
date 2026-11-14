@@ -94,7 +94,7 @@ jobs:
           DESTROY="$(jq -r '.${{inputs.environment}}'./infra/destroy_config.json)"
           echo "destroy=$(echo $DESTROY)" >> $GITHUB_OUTPUT
 
-          # va a añadir un paso de eliminacion de la infra
+# va a añadir un paso de eliminacion de la infra
       - name: Terraform Destroy
         if: steps.read-destroy-config.outputs.destroy == 'true'
         id: terraform-destroy
