@@ -70,8 +70,16 @@ jobs:
         run: |
           cd infra && terraform validate
 
+      # lee del archivo destroy_config.json si el ambiente se debe destruir (debe ir antes del plan/apply)
+      - name: Read destroy configuration
+        id: read-destroy-config
+        run: |
+          DESTROY="$(jq -r '.${{ inputs.environment }}' ./infra/destroy_config.json)"
+          echo "destroy=$DESTROY" >> $GITHUB_OUTPUT
+
       # va a planear todo lo que se despliega dentro de AWS basado en el codigo terraform existente
       - name: Terraform Plan
+        if: steps.read-destroy-config.outputs.destroy != 'true'
         id: terraform-plan
         run: |
           cd infra &&
@@ -80,8 +88,17 @@ jobs:
 
       # implementa la infraestructura planeada dentro de AWS
       - name: Terraform Apply
+        if: steps.read-destroy-config.outputs.destroy != 'true'
         id: terraform-apply
         run: |
           cd infra &&
           terraform workspace select ${{ inputs.environment }} || terraform workspace new ${{ inputs.environment }} &&
           terraform apply "${{ inputs.environment }}.plan"
+
+      # va a añadir un paso de eliminacion de la infra
+      - name: Terraform Destroy
+        if: steps.read-destroy-config.outputs.destroy == 'true'
+        id: terraform-destroy
+        run: cd infra &&
+          terraform workspace select ${{ inputs.environment }} || terraform workspace new ${{ inputs.environment }} &&
+          terraform destroy -var-file="./envs/${{ inputs.environment }}/terraform.tfvars" -auto-approve
