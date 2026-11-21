@@ -77,6 +77,19 @@ jobs:
           DESTROY="$(jq -r '.${{ inputs.environment }}' ./infra/destroy_config.json)"
           echo "destroy=$DESTROY" >> $GITHUB_OUTPUT
 
+
+      - name: Checkov - Analisis de seguridad IAC
+        id: checkov
+        uses: bridgecrewio/checkout-action@v12
+        with:
+          directory: infra
+          framework: terraform
+          soft_fail: true
+
+
+
+
+
       # va a planear todo lo que se despliega dentro de AWS basado en el codigo terraform existente
       - name: Terraform Plan
         if: steps.read-destroy-config.outputs.destroy != 'true'
