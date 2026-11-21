@@ -84,7 +84,7 @@ jobs:
         with:
           directory: infra
           framework: terraform
-          soft_fail: true
+          soft_fail: false
 
 
 

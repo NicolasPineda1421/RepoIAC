@@ -15,7 +15,7 @@ resource "aws_s3_bucket" "my_bucket" {
     // public-read es público
     
     
-    acl = "private"
+    acl = "public-read"
     force_destroy = true 
     
     tags = {
