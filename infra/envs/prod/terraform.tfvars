@@ -1,1 +1,2 @@
-bucket_name="prod-bucketiac-grupo2actividad7"
+environment   = "prod"
+bucket_prefix = "grupo2-sitio"
